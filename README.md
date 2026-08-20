@@ -51,8 +51,8 @@ Midnight's Compact programming model separates data into **Private Witness** (pr
 ### 1. Installation
 Clone the repository and install dependencies:
 ```bash
-git clone https://github.com/hrshjswniii/Stellar-FullMoon-Submission.git
-cd Stellar-FullMoon-Submission
+git clone https://github.com/hrshjswniii/Stellar-NewMoon-Submission.git
+cd Stellar-NewMoon-Submission
 npm install
 ```
 
