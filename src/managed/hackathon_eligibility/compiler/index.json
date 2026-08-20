@@ -1,0 +1,23 @@
+{
+  "compilerVersion": "0.14.0",
+  "targetLanguage": "compact",
+  "contractName": "HackathonEligibility",
+  "sourcePath": "src/hackathon_eligibility.compact",
+  "compiledAt": "2026-08-20T18:40:00.000Z",
+  "circuits": [
+    {
+      "name": "initializeHackathon",
+      "zkir": "zkir/initializeHackathon.zkir",
+      "isPure": false,
+      "witnesses": []
+    },
+    {
+      "name": "verifyAndRegisterParticipant",
+      "zkir": "zkir/verifyAndRegisterParticipant.zkir",
+      "proverKey": "keys/verifyAndRegisterParticipant.pk",
+      "verifierKey": "keys/verifyAndRegisterParticipant.vk",
+      "isPure": false,
+      "witnesses": ["getStudentWitness"]
+    }
+  ]
+}

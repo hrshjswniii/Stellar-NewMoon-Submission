@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "circuitName": "verifyAndRegisterParticipant",
+  "inputs": [
+    { "name": "prerequisiteRequiredHash", "type": "Bytes32" }
+  ],
+  "witnesses": [
+    { "name": "studentIdHash", "type": "Bytes32" },
+    { "name": "prerequisiteCertificateHash", "type": "Bytes32" },
+    { "name": "secretSalt", "type": "Bytes32" },
+    { "name": "isStudent", "type": "Boolean" },
+    { "name": "hasCompletedPrerequisite", "type": "Boolean" },
+    { "name": "hasNotWonPreviously", "type": "Boolean" }
+  ],
+  "constraints": [
+    "AssertEquals(isStudent, true)",
+    "AssertEquals(hasCompletedPrerequisite, true)",
+    "AssertEquals(hasNotWonPreviously, true)",
+    "AssertEquals(prerequisiteCertificateHash, prerequisiteRequiredHash)",
+    "ComputePersistentHash([studentIdHash, hackathonId, secretSalt], nullifier)"
+  ],
+  "outputs": [
+    { "name": "status", "type": "EnumVerificationStatus" }
+  ]
+}

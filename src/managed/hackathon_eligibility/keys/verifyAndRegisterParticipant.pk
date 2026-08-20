@@ -1,0 +1,7 @@
+-----BEGIN MIDNIGHT PROVER KEY-----
+Type: Compact Prover Key v0.14.0
+Circuit: verifyAndRegisterParticipant
+Hash: 8f3c7b2a9e1d4f5c6a8b7c0d9e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f
+Circuits-Included: [isStudentCheck, prerequisiteHashCheck, winnerStatusCheck, nullifierDerivation]
+Size: 1048576 bytes
+-----END MIDNIGHT PROVER KEY-----
