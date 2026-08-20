@@ -1,0 +1,68 @@
+// Midnight Compact ZK Smart Contract
+// Title: Private Hackathon Eligibility Verification
+// Description: Proves participant eligibility (student status, prerequisite completion, non-winner)
+//              without leaking sensitive personal identity data.
+
+pragma language_version >= 0.14.0;
+
+import CompactStandardLibrary;
+
+export enum VerificationStatus {
+    NotVerified,
+    Eligible,
+    AlreadyRegistered
+}
+
+export struct StudentWitness {
+    studentIdHash: Bytes[32];
+    prerequisiteCertificateHash: Bytes[32];
+    secretSalt: Bytes[32];
+    isStudent: Boolean;
+    hasCompletedPrerequisite: Boolean;
+    hasNotWonPreviously: Boolean;
+}
+
+export ledger hackathonId: Bytes[32];
+export ledger organizerPubKey: Bytes[32];
+export ledger verifiedNullifiers: Map<Bytes[32], Boolean>;
+export ledger totalParticipants: Counter;
+
+// Private Witness declaration
+export witness getStudentWitness(): StudentWitness;
+
+// Constructor equivalent: initialize the hackathon state
+export circuit initializeHackathon(id: Bytes[32], organizerKey: Bytes[32]): Void {
+    hackathonId = id;
+    organizerPubKey = organizerKey;
+}
+
+// Main ZK Circuit: Verifies private student witness and records public eligibility
+export circuit verifyAndRegisterParticipant(prerequisiteRequiredHash: Bytes[32]): VerificationStatus {
+    // 1. Retrieve the private witness from off-chain execution context
+    const witnessData = getStudentWitness();
+
+    // 2. Assert zero-knowledge constraints on private witness
+    assert(witnessData.isStudent, "Participant must be an active student");
+    assert(witnessData.hasCompletedPrerequisite, "Participant must have completed required prerequisite");
+    assert(witnessData.hasNotWonPreviously, "Previous hackathon winners are ineligible");
+    assert(witnessData.prerequisiteCertificateHash == prerequisiteRequiredHash, "Prerequisite hash mismatch");
+
+    // 3. Compute unique participant nullifier to prevent double-registration (replays)
+    const nullifier = persistent_hash<Vector[3, Bytes[32]]>([
+        witnessData.studentIdHash,
+        hackathonId,
+        witnessData.secretSalt
+    ]);
+
+    // 4. Check on-chain public state to enforce single registration per student
+    const alreadyRegistered = verifiedNullifiers.lookup(nullifier);
+    if (alreadyRegistered) {
+        return VerificationStatus.AlreadyRegistered;
+    }
+
+    // 5. Update public ledger state
+    verifiedNullifiers.insert(nullifier, true);
+    totalParticipants.increment(1);
+
+    return VerificationStatus.Eligible;
+}
