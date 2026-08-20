@@ -79,12 +79,12 @@ npm run deploy
 ## 📸 Verification Screenshots
 
 ### Successful Compile Output (Circuits Listed)
-![Compile Output Screenshot](./docs/screenshots/compile_output.png)
-*(Placeholder: Displays `compact compile` output showing circuit generation for `initializeHackathon` and `verifyAndRegisterParticipant` along with `.zkir` and key outputs)*
+<img width="1477" height="677" alt="image" src="https://github.com/user-attachments/assets/8b39126d-f4f1-4782-929d-b759da8f46ea" />
+
 
 ### Contract Deployed with Visible Contract Address
-![Contract Deployed Screenshot](./docs/screenshots/contract_deployment.png)
-*(Placeholder: Displays deployment logs on Midnight Preprod showing `VISIBLE DEPLOYED CONTRACT ADDRESS: 0x7f83a21b49e5d9c890123456789abcdef0123456`)*
+<img width="1516" height="528" alt="image" src="https://github.com/user-attachments/assets/ec2a6013-6363-4548-b8ce-f31685e5ffea" />
+
 
 ---
 
